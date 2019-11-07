@@ -31,7 +31,6 @@
         </div>
     </div>
 <script src="js/main.js"></script>
-
     <script type="text/javascript">
 
     $("#btn_login").click(function(){
@@ -39,28 +38,15 @@
     });
 
         function login(){
-        	var username = $("#username").val();    	   
+        	var username = $("#username").val();
         	var password = $("#password").val();
 
            // alert("username:"+username+"===password:"+password);
 
-           var user = {"username":username,"password":password};
-           var jsonData = JSON.stringify(user);
-
-            // //传递到后台
-            // $.post("/admin/AdminLogin",jsonData,function(data){
-            //     if(data.success){
-            //         alert("成功");
-            //     }else{
-            //         alert("失败");
-            //     }
-            // },"json");
             $.ajax({
                 type:'post',
-                url:'http://localhost:8080/gn/admin/AdminLogin',
-                data:jsonData,
-                dataType:"json",
-                contentType : "application/json;charset=UTF-8",
+                url:'../admin/AdminLogin',
+                data:"username="+username+"&password="+password,
                 success:function(data){
                    // alert("ajax请求成功，");
                    console.log(data);

@@ -1,0 +1,247 @@
+<html class="x-admin-sm">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+</head>
+
+<body>
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a>首页</a>
+        <a>
+          <cite>订单</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">刷新</i></a>
+</div>
+<div class="x-body">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-form layui-col-md3 ">
+            <input type="text" id="username"  placeholder="输入订单号/作品搜索" autocomplete="off" class="layui-input">
+        </div>
+        <div id="div1" class="layui-form layui-col-md1">
+
+            <select id="timescope" name="city" lay-verify="">
+<!--                <div id="div1"></div>-->
+                    <option id="option1" value="">筛选时间范围</option>
+                    <option value="week">最近一周</option>
+                    <option value="month">最近一月</option>
+                </select>
+             
+        </div>
+        <div class="layui-form layui-col-md1 ">
+            <select id="state" name="city" lay-verify="">
+                    <option value="">评价状态</option>
+                    <option value="3">已评价</option>
+                    <option value="4">未评价</option>
+                </select>
+        </div>
+
+        <div class="layui-form x-so">
+            <button class="layui-btn"  lay-submit="" lay-filter="sreach" id="sel_btn"><i class="layui-icon">&#xe615;</i></button>
+        </div>
+
+    </div>
+    <xblock>
+        <span class="x-right" style="line-height:40px" id="totil1"></span>
+    </xblock>
+    <table class="layui-table x-admin">
+        <thead>
+        <tr>
+            <th>订单号</th>
+            <th>作品名称</th>
+            <th>订单金额</th>
+            <th>买家</th>
+            <th>交易时间</th>
+            <th>支付方式</th>
+            <th>评价状态</th>
+
+        </thead>
+        <tbody id="td">
+
+        </tbody>
+    </table>
+    <div class="page">
+
+    </div>
+
+</div>
+<script src="js/main.js"></script>
+<script>
+
+    $(function(){
+        get_user_info(1);
+    });
+
+    function get_user_info(pn){
+        $.ajax({
+            url:'../order/getAllOrder',
+            type:'post',
+            data:'pn='+pn,
+            success:function(data){
+                // alert("UserServlet:data"+data);
+                console.log(data);
+                show_user_info(data.extend.list);
+            },
+            error:function () {
+                alert("查询订单异常!");
+            }
+        });
+    }
+
+    function show_user_info(list){
+        //清空之前的数据
+        $('#td').empty();
+        //数据信息展示
+
+        $.each(list.list,function(i,item){
+            // alert("table:"+item.title);
+            var tr = $('<tr></tr>');
+            var td_order_num = $('<td></td>').append(item.order_num);
+            var td_product_name = $('<td></td>').append(item.product_name);
+            var td_money = $('<td></td>').append(item.money);
+            var td_buyer = $('<td></td>').append(item.buyer);
+            var td_create_time = $('<td></td>').append(item.create_time);
+            var td_paytype = $('<td></td>').append(item.paytype);
+            // alert("作品状态:"+item.state)
+            if (item.state == 2) {
+                var td_status = $('<td></td>').append("已评论");
+            }
+            if (item.state == 3) {
+                var td_status = $('<td></td>').append("未评论");
+            }
+
+            tr.append(td_order_num)
+                .append(td_product_name)
+                .append(td_money)
+                .append(td_buyer)
+                .append(td_create_time)
+                .append(td_paytype)
+                .append(td_status)
+            $('#td').append(tr);
+        });
+        $('#totil1').empty();
+        $('#totil1').append('总用户：'+list.total+"位");
+        //分页操作
+        $('.page').empty();
+        var div = $('<div></div>');
+        //判断是否是首页
+        var shouyea;
+        var shangyiye;
+        if(list.pageNum==1){
+            shouyea = $('<a class="num">首页</a>');
+            shangyiye = $('<a class="prev">&lt;&lt;</a>');
+        }else{
+            shouyea = $('<a class="num" href="">首页</a>');
+            shangyiye = $('<a class="prev" href="">&lt;&lt;</a>');
+            shouyea.click(function(){
+                get_user_info(1);
+                return false;
+            });
+            shangyiye.click(function(){
+                get_user_info(list.pageNum-1);
+                return false;
+            });
+        }
+        div.append(shouyea).append(shangyiye);
+        $.each(list.navigatepageNums,function(i,item){
+            var a;
+            if(item == list.pageNum){
+                a = $('<span class="current"></span>').append(item);
+            }else{
+                a = $(' <a class="num" href=""></a>').append(item);
+                a.click(function(){
+                    get_user_info(item);
+                    return false;
+                });
+            }
+            div.append(a);
+        });
+        //判断是否还有 下一页
+        var xiayiye;
+        var moye;
+        if(list.hasNextPage){
+            xiayiye = $(' <a class="next" href="">&gt;&gt;</a>');
+            moye = $('<a class="num" href="">末页</a>');
+            xiayiye.click(function(){
+                get_user_info(list.pageNum+1);
+                return false;
+            });
+            moye.click(function(){
+                get_user_info(list.pages);
+                return false;
+            });
+        }else{
+            xiayiye = $(' <a class="next">&gt;&gt;</a>');
+            moye = $('<a class="num">末页</a>');
+        }
+        div.append(xiayiye).append(moye);
+        $('.page').append(div);
+
+    }
+
+    //删除用户
+    function del_user(id){
+        if (confirm("以下选择的记录将被删除。") == true)
+            $.ajax({
+                url:'../order/delOrder',
+                type:'post',
+                data:'id='+id,
+                success:function(data){
+                    console.log(data);
+
+                    if(data.code==100){
+                        showMessage('删除成功','success',1000)
+                        location.reload();
+                    }else{
+                        showMessage('删除失败','error',1000)
+                    }
+                }
+            });
+        else{
+            return false;
+        }
+
+    }
+
+    $("#sel_btn").click(function(){
+        var username = $("#username").val();
+        var timescope = $("#timescope").val();
+        var state = $("#state").val();
+        sel_user_info(username,timescope,state,1);
+    });
+
+
+    //查询用户
+    function sel_user_info(username,timescope,state,pn){
+
+        // alert('username='+username+'&timescope='+timescope+'&state='+state+'&pn='+pn)
+
+        $.ajax({
+            url:'../order/SelOrderBymohu',
+            type:'post',
+            data:'username='+username+'&timescope='+timescope+'&state='+state+'&pn='+pn,
+            success:function(data){
+                console.log(data);
+                show_user_info(data.extend.list);
+            },
+            error:function () {
+                alert("作品搜索异常!");
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

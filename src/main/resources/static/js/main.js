@@ -1,5 +1,5 @@
 function showMessage(message,type,time) {
-           let str = ''
+           let str = '';
            switch (type) {
                case 'success':
                    str = '<div class="success-message" style="width: 300px;height: 40px;text-align: center;background-color:#daf5eb;;color: rgba(59,128,58,0.7);position: fixed;left: 43%;top: 10%;line-height: 40px;border-radius: 5px;z-index: 9999">\n' +
@@ -11,6 +11,6 @@ function showMessage(message,type,time) {
            }
            $('body').append(str)
            setTimeout(function () {
-               $('.'+type+'-message').remove()
+               $('.'+type+'-message').remove();
            },time)
 }

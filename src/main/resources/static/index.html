@@ -21,6 +21,25 @@
     </script>
 </head>
 <body>
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo"><a href="./index.html">一首歌后台管理系统</a></div>
+    <div class="left_open">
+        <i title="展开左侧栏" class="iconfont">&#xe699;</i>
+    </div>
+
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;">admin</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a id="tuichu">退出</a></dd>
+            </dl>
+        </li>
+
+    </ul>
+
+</div>
+<!-- 顶部结束 -->
 <div class="left-nav">
     <div id="side-nav">
         <ul id="nav">
@@ -28,64 +47,64 @@
                 <a href="javascript:;">
                     <i class="iconfont">&#xe6b8;</i>
                     <cite>首页</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
+                    <i class=" nav_right">&#xe697;</i>
                 </a>
 
             </li>
             <li>
-                <a href="javascript:;">
+                <a _href="user-list.html">
                     <i class="iconfont">&#xe6b8;</i>
                     <cite>用户</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
+                    <i class=" nav_right">&#xe697;</i>
                 </a>
 
             </li>
             <li>
-                <a href="javascript:;">
+                <a _href="author-list.html">
                     <i class="iconfont">&#xe6b8;</i>
                     <cite>作者</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
+                    <i class=" nav_right">&#xe697;</i>
                 </a>
 
             </li>
             <li>
-                <a href="javascript:;">
+                <a _href="product-list.html">
+                    <i class="iconfont">&#xe6b8;</i>
+                    <cite>作品</cite>
+                    <i class=" nav_right">&#xe697;</i>
+                </a>
+
+            </li>
+            <li>
+                <a _href="order-list.html">
                     <i class="iconfont">&#xe6b8;</i>
                     <cite>订单</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
+                    <i class=" nav_right">&#xe697;</i>
                 </a>
 
             </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe6b8;</i>
-                    <cite>数据</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
 
-                </a>
-
-            </li>
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
-                    <cite>运营</cite>
+                    <cite>数据</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="jindian-list.html">
+                        <a _href="data-city.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>城市汇总</cite>
                         </a>
                     </li >
                     <li>
-                        <a _href="jindian-list.html">
+                        <a _href="data-month.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>阅读报表</cite>
+                            <cite>月度报表</cite>
                         </a>
                     </li >
                     <li>
-                        <a _href="jindian-list.html">
+                        <a _href="data-referrals.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>推荐人汇总</cite>
                         </a>
@@ -100,10 +119,9 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="liuyan-list.html">
+                        <a _href="yunying-ad.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>广告</cite>
-
                         </a>
                     </li >
                     <li>
@@ -133,14 +151,7 @@
                             <cite>城市分站</cite>
 
                         </a>
-                    </li >
-                    <li>
-                        <a _href="pinglun-list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>合集</cite>
-
-                        </a>
-                    </li >
+                    </li>
                     <li>
                         <a _href="pinglun-list.html">
                             <i class="iconfont">&#xe6a7;</i>
@@ -153,33 +164,40 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
-                    <cite>添加景点</cite>
+                    <cite>设置</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="city.html">
+                        <a _href="jindian-list.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>添加景点</cite>
+                            <cite>小程序</cite>
                         </a>
                     </li >
-                </ul>
-            </li>
-
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe6ce;</i>
-                    <cite>系统统计</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-
                     <li>
-                        <a _href="echarts2.html">
+                        <a _href="jindian-list.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>柱状图</cite>
+                            <cite>附件上传</cite>
                         </a>
-                    </li>
+                    </li >
+                    <li>
+                        <a _href="jindian-list.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>短信通知</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="jindian-list.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>模板消息</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="admin-list.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>管理员</cite>
+                        </a>
+                    </li >
 
                 </ul>
             </li>
@@ -218,7 +236,7 @@
     <div class="copyright">Copyright ©2017 x-admin v2.3 All Rights Reserved</div>
 </div>
 <!-- 底部结束 -->
-<script src="../static/js/main.js"></script>
+<script src="./js/main.js"></script>
 <script>
     $(function(){
         var admin = localStorage.getItem("admin");
@@ -229,7 +247,7 @@
     });
 
     $("#tuichu").click(function(){
-        localStorage.removeItem("admin")
+        localStorage.removeItem("admin");
         window.location.href="login.html";
     });
     //百度统计可去掉

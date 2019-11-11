@@ -40,7 +40,16 @@ public class OrderServiceImpl implements OrderService {
             orderDTO.setState(order.getState());
 
             //作品id获取作品名
-            String product_name = ProductMapper.getTitleById(order.getProduct_id());
+            String product_name = " ";
+            String product_id = order.getProduct_id();
+            String[] ids = product_id.split("-");
+            for (int i=0;i<ids.length;i++){
+                    String titleById = ProductMapper.getTitleById(ids[i]);
+                    if (titleById != null){
+                        product_name = titleById +"<br>"+product_name;
+                    }
+
+            }
             orderDTO.setProduct_name(product_name);
             //用户id获取用户名
             String buyer = userMapper.getUsernameById(order.getUser_id());
@@ -71,8 +80,18 @@ public class OrderServiceImpl implements OrderService {
                 orderDTO.setState(order.getState());
 
                 //作品id获取作品名
-                String product_name = ProductMapper.getTitleById(order.getProduct_id());
+                String product_name = " ";
+                String product_id = order.getProduct_id();
+                String[] ids = product_id.split("-");
+                for (int i=0;i<ids.length;i++){
+                    String titleById = ProductMapper.getTitleById(ids[i]);
+                    if (titleById != null){
+                        product_name = titleById +"<br>"+product_name;
+                    }
+
+                }
                 orderDTO.setProduct_name(product_name);
+
                 //用户id获取用户名
                 String buyer = userMapper.getUsernameById(order.getUser_id());
                 orderDTO.setBuyer(buyer);
@@ -95,7 +114,16 @@ public class OrderServiceImpl implements OrderService {
                 orderDTO.setState(order.getState());
 
                 //作品id获取作品名
-                String product_name = ProductMapper.getTitleById(order.getProduct_id());
+                String product_name = " ";
+                String product_id = order.getProduct_id();
+                String[] ids = product_id.split("-");
+                for (int i=0;i<ids.length;i++){
+                    String titleById = ProductMapper.getTitleById(ids[i]);
+                    if (titleById != null){
+                        product_name = titleById +"<br>"+product_name;
+                    }
+
+                }
                 orderDTO.setProduct_name(product_name);
                 //用户id获取用户名
                 String buyer = userMapper.getUsernameById(order.getUser_id());

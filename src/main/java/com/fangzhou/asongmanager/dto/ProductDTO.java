@@ -2,7 +2,6 @@ package com.fangzhou.asongmanager.dto;
 
 import lombok.Data;
 
-import java.util.Date;
 @Data
 public class ProductDTO {
     private Long id;        //作品id
@@ -15,9 +14,9 @@ public class ProductDTO {
     private int fenxiang;      //分享量 play_num
 //    private Boolean isTuijian;      //是推荐作品:1是0否
     private String author;       //作者
-    private Date pubTime;       //发布时间
+    private String pubTime;       //发布时间
     private int state;     //作品状态:1上架0下架
 
     private String pro_url;     //作品地址
-
+    private Boolean recommend;  //推荐位
 }

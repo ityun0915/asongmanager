@@ -7,6 +7,8 @@ import com.sun.org.apache.regexp.internal.REUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/product")
@@ -31,7 +33,7 @@ public class ProductController {
     }
 
     @PostMapping("/SelProductById")
-    public Msg SelProductById(@RequestParam("id") Integer id){
+    public Msg SelProductById(@RequestParam("id") Long id){
         Msg msg = productService.SelProductById(id);
         return msg;
     }
@@ -72,6 +74,25 @@ System.out.println("id="+id+"&title="+title+"&type="+type+"&dianzan="+dianzan+"&
     @PostMapping("/delProduct")
     public Msg delProduct(@RequestParam("id")Integer id){
         Msg msg= productService.delProduct(id);
+        return msg;
+    }
+
+    @PostMapping("/Shangjia")
+    public Msg Shangjia(@RequestParam("ids")String ids){
+        System.out.println("上架作品id:"+ids);
+        Msg msg = productService.Shangjia(ids);
+        return msg;
+    }
+    @PostMapping("/xiajia")
+    public Msg xiajia(@RequestParam("ids")String ids){
+        System.out.println("下架作品id:"+ids);
+        Msg msg = productService.xiajia(ids);
+        return msg;
+    }
+    @PostMapping("/tuijian")
+    public Msg tuijian(@RequestParam("ids")String ids){
+        System.out.println("设为推荐作品id:"+ids);
+        Msg msg = productService.tuijian(ids);
         return msg;
     }
 }

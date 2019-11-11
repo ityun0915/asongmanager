@@ -26,7 +26,7 @@ public interface ProductMapper {
     List<ProductionType> SelTypeCate();
 
     @Select("select * from product where id=#{id}")
-    Product SelProductById(Integer id);
+    Product SelProductById(Long id);
 
     @Update("update product set title=#{title}," +
             "class_id=#{type},com_num=#{pinlun},good_num=#{dianzan},down_num=#{xiazai},play_num=#{fenxiang}," +
@@ -38,7 +38,7 @@ public interface ProductMapper {
     void delProduct(Integer id);
 
     @Select("select title from product where id=#{id}")
-    String getTitleById(Long id);
+    String getTitleById(String id);
 
     @Select("select count(1) from product where author_id=#{author_id}")
     int getProCountByAuthorId(Long author_id);
@@ -48,4 +48,28 @@ public interface ProductMapper {
 
     @Select("select sum(down_num) from product where author_id=#{author_id}")
     int getDownCountByAuthor(Long author_id);
+
+    @Select("select count(1) from product where class_id=#{id} ")
+    int getProNumByType(int id);
+
+    @Select("select count(1) from product")
+    int getProNum();
+
+    @Select("SELECT COUNT(1) FROM product WHERE TO_DAYS(create_time) = TO_DAYS(NOW())")
+    int getTodayNum();
+
+    @Select("SELECT COUNT(1) FROM product WHERE WEEK(create_time) = WEEK(NOW())")
+    int getWeekNum();
+
+    @Select("SELECT COUNT(1) FROM product WHERE MONTH(create_time) = MONTH(NOW())")
+    int getMonthNum();
+
+    @Update("update product set state=1 where id=#{id}")
+    void Shangjia(String id);
+
+    @Update("update product set state=0 where id=#{id}")
+    void xiajia(String id);
+
+    @Update("update product set recommend=true where id=#{id}")
+    void tuijian(String id);
 }

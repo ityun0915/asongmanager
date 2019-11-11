@@ -317,5 +317,157 @@ public class PagesMap {
 	        map.put("hasPreviousPage", hasPreviousPage);
 	        return map;
 	}
+	public static Map<String,Object> getProTypeDTOMaps(List<ProductionTypeDTO> list, int pn){
+		 List<ProductionTypeDTO> newList = new ArrayList<ProductionTypeDTO>();
+	        if(10*pn>list.size()) {
+	        	newList = list.subList(10*pn-9-1,list.size());
+	        }else {
+	        	newList = list.subList(10*pn-9-1, 10*pn);
+	        }
+
+	        Map<String,Object> map = new HashMap<String,Object>();
+
+	        int total = list.size();
+	        int pageNum = pn;
+	        int pages = total%10 == 0 ? (total/10) : (total/10)+1;
+	        int[] navigatepageNums = new int[pages];
+	        for(int i=0;i<navigatepageNums.length;i++) {
+	        	navigatepageNums[i]=i+1;
+	        }
+	        boolean hasNextPage = false;
+	        if(pn==pages) {
+	        	hasNextPage = false;
+	        }else {
+	        	hasNextPage = true;
+	        }
+	        boolean hasPreviousPage = false;
+	        if(pn==1) {
+	        	hasPreviousPage = false;
+	        }else {
+	        	hasPreviousPage = true;
+	        }
+	        map.put("total", total);
+	        map.put("pageNum", pageNum);
+	        map.put("pages", pages);
+	        map.put("navigatepageNums", navigatepageNums);
+	        map.put("hasNextPage", hasNextPage);
+	        map.put("list", newList);
+	        map.put("hasPreviousPage", hasPreviousPage);
+	        return map;
+	}
+	public static Map<String,Object> getAdvertisDTOMaps(List<AdvertisingDTO> list, int pn){
+		 List<AdvertisingDTO> newList = new ArrayList<AdvertisingDTO>();
+	        if(10*pn>list.size()) {
+	        	newList = list.subList(10*pn-9-1,list.size());
+	        }else {
+	        	newList = list.subList(10*pn-9-1, 10*pn);
+	        }
+
+	        Map<String,Object> map = new HashMap<String,Object>();
+
+	        int total = list.size();
+	        int pageNum = pn;
+	        int pages = total%10 == 0 ? (total/10) : (total/10)+1;
+	        int[] navigatepageNums = new int[pages];
+	        for(int i=0;i<navigatepageNums.length;i++) {
+	        	navigatepageNums[i]=i+1;
+	        }
+	        boolean hasNextPage = false;
+	        if(pn==pages) {
+	        	hasNextPage = false;
+	        }else {
+	        	hasNextPage = true;
+	        }
+	        boolean hasPreviousPage = false;
+	        if(pn==1) {
+	        	hasPreviousPage = false;
+	        }else {
+	        	hasPreviousPage = true;
+	        }
+	        map.put("total", total);
+	        map.put("pageNum", pageNum);
+	        map.put("pages", pages);
+	        map.put("navigatepageNums", navigatepageNums);
+	        map.put("hasNextPage", hasNextPage);
+	        map.put("list", newList);
+	        map.put("hasPreviousPage", hasPreviousPage);
+	        return map;
+	}
+	public static Map<String,Object> getCommontDTOMaps(List<ProCommontDTO> list, int pn){
+		 List<ProCommontDTO> newList = new ArrayList<ProCommontDTO>();
+	        if(10*pn>list.size()) {
+	        	newList = list.subList(10*pn-9-1,list.size());
+	        }else {
+	        	newList = list.subList(10*pn-9-1, 10*pn);
+	        }
+
+	        Map<String,Object> map = new HashMap<String,Object>();
+
+	        int total = list.size();
+	        int pageNum = pn;
+	        int pages = total%10 == 0 ? (total/10) : (total/10)+1;
+	        int[] navigatepageNums = new int[pages];
+	        for(int i=0;i<navigatepageNums.length;i++) {
+	        	navigatepageNums[i]=i+1;
+	        }
+	        boolean hasNextPage = false;
+	        if(pn==pages) {
+	        	hasNextPage = false;
+	        }else {
+	        	hasNextPage = true;
+	        }
+	        boolean hasPreviousPage = false;
+	        if(pn==1) {
+	        	hasPreviousPage = false;
+	        }else {
+	        	hasPreviousPage = true;
+	        }
+	        map.put("total", total);
+	        map.put("pageNum", pageNum);
+	        map.put("pages", pages);
+	        map.put("navigatepageNums", navigatepageNums);
+	        map.put("hasNextPage", hasNextPage);
+	        map.put("list", newList);
+	        map.put("hasPreviousPage", hasPreviousPage);
+	        return map;
+	}
+	public static Map<String,Object> getReferralsDTOMaps(List<ReferralsDTO> list, int pn){
+		 List<ReferralsDTO> newList = new ArrayList<ReferralsDTO>();
+	        if(10*pn>list.size()) {
+	        	newList = list.subList(10*pn-9-1,list.size());
+	        }else {
+	        	newList = list.subList(10*pn-9-1, 10*pn);
+	        }
+
+	        Map<String,Object> map = new HashMap<String,Object>();
+
+	        int total = list.size();
+	        int pageNum = pn;
+	        int pages = total%10 == 0 ? (total/10) : (total/10)+1;
+	        int[] navigatepageNums = new int[pages];
+	        for(int i=0;i<navigatepageNums.length;i++) {
+	        	navigatepageNums[i]=i+1;
+	        }
+	        boolean hasNextPage = false;
+	        if(pn==pages) {
+	        	hasNextPage = false;
+	        }else {
+	        	hasNextPage = true;
+	        }
+	        boolean hasPreviousPage = false;
+	        if(pn==1) {
+	        	hasPreviousPage = false;
+	        }else {
+	        	hasPreviousPage = true;
+	        }
+	        map.put("total", total);
+	        map.put("pageNum", pageNum);
+	        map.put("pages", pages);
+	        map.put("navigatepageNums", navigatepageNums);
+	        map.put("hasNextPage", hasNextPage);
+	        map.put("list", newList);
+	        map.put("hasPreviousPage", hasPreviousPage);
+	        return map;
+	}
 
 }

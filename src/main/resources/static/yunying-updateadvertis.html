@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>修改广告信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+
+      <link rel="stylesheet" href="./lib/layui/css/layui.css"  media="all">
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+
+
+    
+  </head>
+  
+  <body>
+    <div class="x-body">
+        <div class="layui-form">
+
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>标题
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="title"  required="" lay-verify="nikename"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+            <div class="layui-form-item" id="x-city">
+                <label class="layui-form-label">位置</label>
+                <div class="layui-input-inline">
+                    <select id="type" name="type" lay-filter="">
+                        <option value="" >广告位置</option>
+                        <option value="1" >首页-banner</option>
+                        <option value="2" >首页-运营位</option>
+                        <option value="3" >首页-运营位2</option>
+                    </select>
+                </div>
+
+            </div>
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>链接
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="url"  required="" lay-verify="nikename"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>点击量
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="click_num"  required="" lay-verify="nikename"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <input type="hidden" id="images" name="images" class="image">
+              <div class="layui-form-item">
+                  <label class="layui-form-label ">广告图</label>
+                  <div class="layui-upload">
+                      <button type="button" class="layui-btn" id="test1">上传图片</button>
+                      <div class="layui-upload-list">
+                          <img class="layui-upload-img" id="demo1">
+                          <p id="demoText"></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_repass" class="layui-form-label">
+              </label>
+              <button  class="layui-btn" lay-filter="add" id="xg_btn">
+                确认修改
+              </button>
+          </div>
+      </div>
+    </div>
+    <script src="js/main.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use('upload', function(){
+            var $ = layui.jquery
+                ,upload = layui.upload;
+
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#test1'
+                ,type: 'post'
+                ,url: '../fileupload/upload'
+                ,accept:'images'
+                ,size:50000
+                ,before: function(obj){
+
+                    obj.preview(function(index, file, result){
+
+                        $('#demo1').attr('src', result);
+                    });
+                }
+                ,done: function(res){
+                    //如果上传失败
+                    if(res.code > 0){
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #4cae4c;">上传成功</span>');
+
+                    var fileupload = $(".image");
+                    fileupload.attr("value",res.data.src);
+                    console.log(fileupload.attr("value"));
+                }
+                ,error: function(){
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function(){
+                        uploadInst.upload();
+                    });
+                }
+            });
+
+
+        });
+
+        $(function(){
+            get_user_info();
+        });
+
+        function get_user_info(){
+            var url = window.location;
+            var id = getUrlParam(url,"id");
+            $.ajax({
+                url:"../advertis/SelAdvertisById",
+                type:"post",
+                data:"id="+id,
+                success:function(data){
+                    console.log(data);
+                    if(data.code==100){
+                        $("#title").val(data.extend.user.title);
+                        $("#type").val(data.extend.user.type);
+                        $("#url").val(data.extend.user.url);
+                        $("#click_num").val(data.extend.user.click_num);
+
+                        // $("#images").val(data.extend.user.img);
+                        // alert("img:"+data.extend.user.img)
+
+                        $('#demo1').attr('src', data.extend.user.img)
+
+                    }else if(result.code==200){
+
+                    }
+                }
+            });
+        }
+        //获取url地址上参数
+        function getUrlParam(url,name){
+            var pattern = new RegExp("[?&]" + name +"\=([^&]+)","g");
+            var matcher = pattern.exec(url);
+            var items = null;
+            if(matcher != null){
+                try{
+                    items = decodeURIComponent(decodeURIComponent(matcher[1]));
+                }catch(e){
+                    try{
+                        items = decodeURIComponent(matcher[1]);
+                    }catch(e){
+                        items = matcher[1];
+                    }
+                }
+            }
+            return items;
+        }
+
+        $("#xg_btn").click(function(){
+
+            var url = window.location;
+            var id = getUrlParam(url,"id");
+            var title = $("#title").val();
+            var type = $("#type").val();
+            var url1 = $("#url").val();
+            var click_num = $("#click_num").val();
+            var img = $("#images").val();
+            $.ajax({
+                url:"../advertis/UpdateAdvertis",
+                type:"post",
+                data:"id="+id+"&title="+title+"&type="+type+"&url="+url1+"&click_num="+click_num+"&img="+img,
+                success:function(data){
+                    console.log(data);
+                    if(data.code==100){
+                        showMessage('修改成功','success',1000)
+                    }else{
+                        showMessage('修改失败','error',1000)
+                    }
+                }
+            });
+        });
+
+    </script>
+        
+  </body>
+
+</html>

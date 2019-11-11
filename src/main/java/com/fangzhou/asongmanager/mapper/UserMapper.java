@@ -17,4 +17,16 @@ public interface UserMapper {
 
     @Select("select name from user where id=#{id}")
     String getUsernameById(Long id);
+
+    @Select("SELECT COUNT(1) FROM user")
+    int getUserNum();
+
+    @Select("SELECT COUNT(1) FROM user WHERE TO_DAYS(create_time) = TO_DAYS(NOW())")
+    int getTodayNum();
+
+    @Select("SELECT COUNT(1) FROM user WHERE week(create_time) = week(NOW())")
+    int getWeekNum();
+
+    @Select("SELECT COUNT(1) FROM user WHERE month(create_time) = month(NOW())")
+    int getMonthNum();
 }

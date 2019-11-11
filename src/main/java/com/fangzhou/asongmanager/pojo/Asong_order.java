@@ -6,12 +6,12 @@ import java.util.Date;
 @Data
 public class Asong_order {
     private Long id;
-    private Date create_time;
+    private String create_time;
     private int money;
     private String order_num;
-    private Long product_id;
+    private String product_id;
     private int state;
-    private Date update_time;
+    private String update_time;
     private Long user_id;
 
 }

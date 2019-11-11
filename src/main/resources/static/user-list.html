@@ -87,14 +87,15 @@
         $.each(list.list,function(i,item){
             var tr = $('<tr></tr>');
             var td_id = $('<td></td>').append(item.id);
-            var td_header = $('<td></td>').append('<img width="60px" height="50px"  src="http://192.168.5.53:8888/'+item.header+'" alt="">');
+            var td_header = $('<td></td>').append('<img width="60px" height="50px"  src="'+item.header+'" alt="">');
             var td_name = $('<td></td>').append(item.name);
             var td_phone = $('<td></td>').append(item.phone);
             var td_referrals = $('<td></td>').append(item.referrals);
-            if (item.sex) {
-                var td_sex = $('<td></td>').append("女");
+            // alert("性别:"+item.is_man);
+            if (!item.is_man) {
+                var td_sex = $('<td></td>').append('<img src="images/nv.png" alt="">女');
             }else{
-                var td_sex = $('<td></td>').append("男");
+                var td_sex = $('<td></td>').append('<img src="images/nan.png" alt="">男');
 
             }
             var td_city = $('<td></td>').append(item.city);

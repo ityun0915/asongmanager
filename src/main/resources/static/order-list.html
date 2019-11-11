@@ -1,6 +1,4 @@
 <html class="x-admin-sm">
-<html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <title>用户列表</title>
@@ -113,13 +111,16 @@
             var td_money = $('<td></td>').append(item.money);
             var td_buyer = $('<td></td>').append(item.buyer);
             var td_create_time = $('<td></td>').append(item.create_time);
-            var td_paytype = $('<td></td>').append(item.paytype);
+            var td_paytype = $('<td></td>').append('<img src="images/wxpay.png" alt="">'+item.paytype);
             // alert("作品状态:"+item.state)
-            if (item.state == 2) {
-                var td_status = $('<td></td>').append("已评论");
+            if (item.state == 0) {
+                var td_status = $('<td></td>').append('<img src="images/nopay.png" alt="">未付款');
             }
-            if (item.state == 3) {
-                var td_status = $('<td></td>').append("未评论");
+            if (item.state == 1) {
+                var td_status = $('<td></td>').append('<img src="images/pinjia.png" alt="">已评价');
+            }
+            if (item.state == 2) {
+                var td_status = $('<td></td>').append('<img src="images/nopinjia.png" alt="">未评价');
             }
 
             tr.append(td_order_num)

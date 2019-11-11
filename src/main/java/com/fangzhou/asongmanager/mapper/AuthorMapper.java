@@ -29,4 +29,18 @@ public interface AuthorMapper {
 
     @Update("update author set name=#{name},province=#{province},city=#{city},referrals=#{referrals} where id=#{id}")
     void UpdateAdmin(AuthorDTO authorDTO);
+
+    @Select("select count(1) from author")
+    int getAuthorNum();
+
+    @Select("SELECT COUNT(1) FROM author WHERE TO_DAYS(create_time) = TO_DAYS(NOW())")
+    int getTodayNum();
+
+    @Select("SELECT COUNT(1) FROM author WHERE week(create_time) = week(NOW())")
+    int getWeekNum();
+
+    @Select("SELECT COUNT(1) FROM author WHERE month(create_time) = month(NOW())")
+    int getMonthNum();
+
+
 }

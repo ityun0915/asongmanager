@@ -51,6 +51,7 @@ public class ProductServiceImpl implements ProductService {
             pro.setPubTime(product.getCreate_time());
             pro.setState(product.getState());
             pro.setPro_url(product.getPro_url());
+            pro.setRecommend(product.getRecommend());
             //将productdto对象存入List<ProductDTO>
             productList.add(pro);
         }
@@ -85,6 +86,8 @@ public class ProductServiceImpl implements ProductService {
             pro.setAuthor(authorMapper.getNameById(authorId));
             pro.setPubTime(product.getCreate_time());
             pro.setState(product.getState());
+            pro.setRecommend(product.getRecommend());
+
             //将productdto对象存入List<ProductDTO>
             productList.add(pro);
         }
@@ -103,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Msg SelProductById(Integer id) {
+    public Msg SelProductById(Long id) {
 
         ProductDTO pro = new ProductDTO();
 
@@ -130,6 +133,34 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Msg delProduct(Integer id) {
         productMapper.delProduct(id);
+        return Msg.success();
+    }
+
+    @Override
+    public Msg Shangjia(String ids) {
+
+        String[] arr = ids.split(",");
+        for (int i=0;i<arr.length;i++){
+            productMapper.Shangjia(arr[i]);
+        }
+        return Msg.success();
+    }
+    @Override
+    public Msg xiajia(String ids) {
+
+        String[] arr = ids.split(",");
+        for (int i=0;i<arr.length;i++){
+            productMapper.xiajia(arr[i]);
+        }
+        return Msg.success();
+    }
+    @Override
+    public Msg tuijian(String ids) {
+
+        String[] arr = ids.split(",");
+        for (int i=0;i<arr.length;i++){
+            productMapper.tuijian(arr[i]);
+        }
         return Msg.success();
     }
 }

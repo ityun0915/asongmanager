@@ -17,22 +17,40 @@
 </head>
 
 <script type="text/javascript">
-    window.onload=function(){
 
+
+    function aaa() {
         var url = window.location;
         var pro_url = getUrlParam(url,"id");
-        alert("pro_url:"+pro_url);
-        var pro_url = "http://192.168.5.53:8888/"+pro_url;
 
-         var a = document.getElementById("#a1");
-         a.href=pro_url;
-        a.click();
+        var pro_url = "http://192.168.5.53:8888/"+pro_url;
+        alert("pro_url:"+pro_url);
+        var we = $("#a1");
+        we.href=pro_url;
+    }
+    //获取url地址上参数
+    function getUrlParam(url,name){
+        var pattern = new RegExp("[?&]" + name +"\=([^&]+)","g");
+        var matcher = pattern.exec(url);
+        var items = null;
+        if(matcher != null){
+            try{
+                items = decodeURIComponent(decodeURIComponent(matcher[1]));
+            }catch(e){
+                try{
+                    items = decodeURIComponent(matcher[1]);
+                }catch(e){
+                    items = matcher[1];
+                }
+            }
+        }
+        return items;
     }
 </script>
 
 <body>
 <div class="x-body">
-    <a id="a1" href="">收听</a>
+    <a id="a1" onclick="aaa()" href="">收听</a>
 </div>
 </body>
 

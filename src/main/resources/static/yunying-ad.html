@@ -27,11 +27,11 @@
 <div class="x-body">
     <div class="layui-row">
         <div class="layui-form layui-col-md10 x-so">
-            <input type="text" id="username"  placeholder="标题/手机号" autocomplete="off" class="layui-input">
+            <input type="text" id="username"  placeholder="广告ID/标题/位置" autocomplete="off" class="layui-input">
             <button class="layui-btn"  lay-submit="" lay-filter="sreach" id="sel_btn"><i class="layui-icon">&#xe615;</i></button>
         </div>
         <div class="layui-form layui-col-md2 x-so">
-            <a title='添加管理员'  onclick="x_admin_show('添加管理员','admin-add.html',800,500)"  href='javascript:;' style='display:inline-block;padding:2px 8px;background:#1E9FFF;color:#fff;font-size:16px;border-radius:5px;'>添加管理员</a><!--            <button class="layui-btn"  lay-submit="" lay-filter="sreach" id="sel_btn"><i class="layui-icon">&#xe615;</i></button>-->
+            <a title='添加广告位'  onclick="x_admin_show('添加广告位','yunying-adupload.html',800,500)"  href='javascript:;' style='display:inline-block;padding:2px 8px;background:#1E9FFF;color:#fff;font-size:16px;border-radius:5px;'>添加广告位</a><!--            <button class="layui-btn"  lay-submit="" lay-filter="sreach" id="sel_btn"><i class="layui-icon">&#xe615;</i></button>-->
         </div>
     </div>
     <xblock>
@@ -40,10 +40,12 @@
     <table class="layui-table x-admin">
         <thead>
         <tr>
-            <th>姓名</th>
-            <th>手机号</th>
-            <th>邮箱</th>
-            <th>角色</th>
+            <th>广告ID</th>
+            <th>标题</th>
+            <th>位置</th>
+            <th>图片</th>
+            <th>链接</th>
+            <th>点击量</th>
             <th>操作</th></tr>
         </thead>
         <tbody id="td">
@@ -64,7 +66,7 @@
 
     function get_user_info(pn){
         $.ajax({
-            url:'../admin/getAllAdmin',
+            url:'../advertis/getAllAdvertis',
             type:'post',
             data:'pn='+pn,
             success:function(data){
@@ -82,21 +84,34 @@
         //数据信息展示
         $.each(list.list,function(i,item){
             var tr = $('<tr></tr>');
-            var td_username = $('<td></td>').append(item.username);
-            var td_phone = $('<td></td>').append(item.phone);
-            var td_email = $('<td></td>').append(item.email);
-            var td_juese = $('<td></td>').append(item.juese);
-            var span1 = $("<a title='用户信息'  onclick=" + "x_admin_show('用户信息','admin-update.html?id='+'"+item.id+"',800,500)" + " " + "href='javascript:;' style='display:inline-block;padding:2px 8px;background:blue;color:#fff;font-size:12px;border-radius:3px;'>修改信息</a>");
-            var span5 = $("<a title='删除用户'   style='display:inline-block;padding:2px 8px;background:#00CED1;color:#fff;font-size:12px;border-radius:3px;'>删除用户</a>");
+            var td_id = $('<td></td>').append(item.id);
+            var td_title = $('<td></td>').append(item.title);
+            if (item.type == 1){
+                var td_type = $('<td></td>').append("首页-banner");
+            }
+            if (item.type == 2){
+                var td_type = $('<td></td>').append("首页-运营位");
+            }
+            if (item.type == 3){
+                var td_type = $('<td></td>').append("首页-运营位2");
+            }
+
+            var td_img = $('<td></td>').append('<img width="100px" height="60px"  src="'+item.img+'" alt="">');
+            var td_url = $('<td></td>').append('<a href="'+item.url+'">'+item.url+'</a>');
+            var td_click_num = $('<td></td>').append(item.click_num);
+            var span1 = $("<a title='广告信息'  onclick=" + "x_admin_show('用户信息','yunying-updateadvertis.html?id='+'"+item.id+"',800,500)" + " " + "href='javascript:;' style='display:inline-block;padding:2px 8px;background:blue;color:#fff;font-size:12px;border-radius:3px;'>修改信息</a>");
+            var span5 = $("<a title='删除广告'   style='display:inline-block;padding:2px 8px;background:#00CED1;color:#fff;font-size:12px;border-radius:3px;'>删除广告</a>");
             span5.click(function(){
                 del_user(item.id);
             });
             var spanTd = $("<td></td>");
             spanTd.append(span1).append("  ").append(span5);
-            tr.append(td_username)
-                .append(td_phone)
-                .append(td_email)
-                .append(td_juese)
+            tr.append(td_id)
+                .append(td_title)
+                .append(td_type)
+                .append(td_img)
+                .append(td_url)
+                .append(td_click_num)
                 .append(spanTd);
             $('#td').append(tr);
         });
@@ -164,7 +179,7 @@
     function del_user(id){
         if (confirm("以下选择的记录将被删除。") == true)
             $.ajax({
-                url:'../admin/DelAdmin',
+                url:'../advertis/DelAdvertis',
                 type:'post',
                 data:'id='+id,
                 success:function(data){
@@ -193,7 +208,7 @@
     function sel_user_info(username,pn){
         // alert("username:"+username)
         $.ajax({
-            url:'../admin/SelAdminBymohu',
+            url:'../advertis/SelAdvertisBymohu',
             type:'post',
             data:'username='+username+'&pn='+pn,
             success:function(data){
@@ -201,7 +216,7 @@
                 show_user_info(data.extend.list);
             },
             error:function () {
-                alert("姓名/电话查询失败");
+                alert("广告ID/标题/位置");
             }
         });
     }

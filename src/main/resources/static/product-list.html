@@ -57,16 +57,17 @@
     <xblock>
         <span class="x-right" style="line-height:40px" id="totil1"></span>
     </xblock>
-    <table class="layui-table x-admin">
+    <table class="layui-table">
         <thead>
         <tr>
-            <th>作品ID</th>
+            <th><input id="selectAll" value="" type="checkbox">作品ID</th>
             <th>作品名称</th>
             <th>类型</th>
             <th>点赞</th>
             <th>评论</th>
             <th>下载</th>
             <th>播放</th>
+            <th>推荐位</th>
             <th>作者</th>
             <th>发布时间</th>
             <th>状态</th>
@@ -75,7 +76,25 @@
         <tbody id="td">
 
         </tbody>
+        <tfoot>
+        <div class="layui-row layui-col-space10 ">
+            <div class="layui-form layui-col-md1 ">
+            </div>
+            <div class="layui-form layui-col-md1 ">
+                <button type="button" class="layui-btn layui-btn-warm " onclick="shelf()">上架</button>
+            </div>
+            <div class="layui-form layui-col-md1 ">
+                <button type="button" class="layui-btn layui-btn-danger" onclick="obtained()">下架</button>
+            </div>
+            <div class="layui-form layui-col-md2 ">
+                <button type="button" class="layui-btn layui-btn-normal" onclick="recommend()">设为推荐</button>
+
+            </div>
+
+        </div>
+        </tfoot>
     </table>
+
     <div class="page">
 
     </div>
@@ -144,24 +163,31 @@
         $.each(list.list,function(i,item){
             // alert("table:"+item.title);
             var tr = $('<tr></tr>');
-            var td_id = $('<td></td>').append(item.id);
+            var td_id = $('<td></td>').append('<input name="gg" id="" value="'+item.id+'" type="checkbox">'+item.id);
             var td_title = $('<td></td>').append(item.title);
             var td_type = $('<td></td>').append(item.type);
             var td_dianzan = $('<td></td>').append(item.dianzan);
             var td_pinlun = $('<td></td>').append(item.pinlun);
             var td_xizai = $('<td></td>').append(item.xiazai);
             var td_fenxiang = $('<td></td>').append(item.fenxiang);
+            if (item.recommend) {
+                var td_tuijian = $('<td></td>').append("是");
+            }else {
+                var td_tuijian = $('<td></td>').append("否");
+
+            }
             var td_isAuthor = $('<td></td>').append(item.author);
             var td_pubTime = $('<td></td>').append(item.pubTime);
             // alert("作品状态:"+item.state)
-            if (item.state) {
+            if (item.state == 1) {
                 var td_status = $('<td></td>').append("已上架");
-            }else{
+            }
+            if (item.state == 0) {
                 var td_status = $('<td></td>').append("已下架");
             }
 // alert("pro_url:"+item.pro_url)
 //             var span2 = $("<a title='收听'onclick=" + "x_admin_show('编辑','product-listen.html?id='+'"+item.pro_url+"',800,500)" + " " + "href='javascript:;' style='display:inline-block;padding:2px 8px;background:blue;color:#fff;font-size:12px;border-radius:3px;'>收听</a>");
-            var span2 = $("<a title='收听' href='http://192.168.5.53:8888/"+item.pro_url+"' style='display:inline-block;padding:2px 8px;background:blue;color:#fff;font-size:12px;border-radius:3px;'>收听</a>");
+            var span2 = $("<a title='收听' href='http://120.24.253.38:8888/"+item.pro_url+"' style='display:inline-block;padding:2px 8px;background:blue;color:#fff;font-size:12px;border-radius:3px;'>收听</a>");
             var span3 = $("<a title='附件下载'  onclick=" + "x_admin_show('附件下载','product-download.html?id='+'"+item.id+"',800,500)" + " " + "href='javascript:;' style='display:inline-block;padding:2px 8px;background:#1E9FFF;color:#fff;font-size:12px;border-radius:3px;'>附件下载</a>");
             var span1 = $("<a title='编辑'  onclick=" + "x_admin_show('编辑','product-update.html?id='+'"+item.id+"',800,500)" + " " + "href='javascript:;' style='display:inline-block;padding:2px 8px;background:#00FF00;color:#fff;font-size:12px;border-radius:3px;'>编辑</a>");
             var span5 = $("<a title='删除用户' style='display:inline-block;padding:2px 8px;background:red;color:#fff;font-size:12px;border-radius:3px;'>删除</a>");
@@ -177,6 +203,7 @@
                 .append(td_pinlun)
                 .append(td_xizai)
                 .append(td_fenxiang)
+                .append(td_tuijian)
                 .append(td_isAuthor)
                 .append(td_pubTime)
                 .append(td_status)
@@ -291,6 +318,97 @@
             }
         });
     }
+
+    //控制checkbox全选
+    window.onload = function () {
+        var selectAll = document.getElementById("selectAll");// 获取全选元素
+        var ggs = document.getElementsByName("gg");//获取input标签里的checkbox相同名字的集合
+        // 全选或者不选的时候 调用此函数
+        function ff(flag) {//勾选时flag=true,取消勾选时flag=false
+            //创建 i < input 的条件进行for循环获取input的索引，在条件内i++,不满足条件就结束代码
+            for (var i = 0; i < ggs.length; i++) {
+                ggs[i].checked = flag;//获取 i 当前条，然后等于传过来的参数
+            }
+        }
+        //全选的点击事件，根据点击的状态调用上面函数
+        selectAll.onclick = function () {
+            if (selectAll.checked) {//if(selectAll.checked)判断是否勾选
+                // document.getElementById("pp").innerHTML = '取消全选';
+                ff(true);//调用ff(flag)函数，把判断勾选的参数true传过去
+            } else {
+                // document.getElementById("pp").innerHTML = '全选';
+                ff(false)//调用ff(flag)函数，把判断勾选的参数false传过去
+            }  }  }
+
+            //上架作品
+            function shelf() {
+                obj = document.getElementsByName("gg");
+                check_val = [];
+                for(k in obj){
+                    if(obj[k].checked)
+                        check_val.push(obj[k].value);
+                }
+                // alert(check_val);
+                $.ajax({
+                    url: "../product/Shangjia",
+                    type: "post",
+                    data: 'ids='+check_val,
+                    success:function(data){
+                        console.log(data);
+                        alert("作品上架成功");
+                        get_user_info(1);
+                    },
+                    error:function () {
+                        alert("作品上架异常!");
+                    }
+                });
+            }
+            //下架作品
+            function obtained() {
+                obj = document.getElementsByName("gg");
+                check_val = [];
+                for(k in obj){
+                    if(obj[k].checked)
+                        check_val.push(obj[k].value);
+                }
+                // alert(check_val);
+                $.ajax({
+                    url: "../product/xiajia",
+                    type: "post",
+                    data: 'ids='+check_val,
+                    success:function(data){
+                        console.log(data);
+                        alert("作品下架成功");
+                        get_user_info(1);
+                    },
+                    error:function () {
+                        alert("作品下架异常!");
+                    }
+                });
+            }
+            //设为推荐作品
+            function recommend() {
+                obj = document.getElementsByName("gg");
+                check_val = [];
+                for(k in obj){
+                    if(obj[k].checked)
+                        check_val.push(obj[k].value);
+                }
+                // alert(check_val);
+                $.ajax({
+                    url: "../product/tuijian",
+                    type: "post",
+                    data: 'ids='+check_val,
+                    success:function(data){
+                        console.log(data);
+                        alert("设为推荐成功");
+                        get_user_info(1);
+                    },
+                    error:function () {
+                        alert("设为推荐异常!");
+                    }
+                });
+            }
 
 </script>
 </body>
